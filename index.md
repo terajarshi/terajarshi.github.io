@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html class="has-navbar-fixed-top has-searchbar-fixed-top">
+<html class="has-navbar-fixed-top has-searchbar-fixed-top" lang="en">
   <head>
     <meta charset="utf-8">
+    <meta name=" theme-color" content="#0f171e">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ciao!</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
@@ -15,7 +16,7 @@
       <!-- Navigation bar starts here -->
     <nav class="navbar is-dark is-fixed-top">
         <div class="navbar-brand">
-            <a href="index2.html" class="navbar-item">
+            <a href="" class="navbar-item">
                 <img src="assets/logo.png" alt="">
             </a>
             <a class="navbar-burger">
@@ -25,7 +26,7 @@
             </a>
         </div>
         <div class="navbar-menu">
-            <div class="navbar-end">
+            <div class="navbar-start">
                 <a href="?page=movies" class="navbar-item has-text-white">Movies</a>
             </div>
         </div>
