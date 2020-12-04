@@ -1,0 +1,238 @@
+/* universal tags starts here */
+html, nav {
+    background-color: #0f171e !important;
+}
+.has-searchbar-fixed-top {
+    padding-top: 6.5rem !important;
+}
+/* universal tags ends here */
+
+/* navbar starts here */
+.navbar {
+    z-index: +99999 !important;
+}
+.navbar>.navbar-menu{
+    background-color: #0f171e;
+}
+.navbar-link,a.navbar-item{cursor:pointer}.navbar-link.is-active,.navbar-link:focus,.navbar-link:focus-within,.navbar-link:hover,a.navbar-item.is-active,a.navbar-item:focus,a.navbar-item:focus-within,a.navbar-item:hover{
+    background-color: #0f171e;
+}
+/* navbar ends here */
+
+/* movie details starts here */
+.moviePoster {
+    position: relative;
+    height: auto;
+    margin: auto;
+    box-sizing: border-box;
+}
+.backButton {
+    top: 0;
+    left: 0;
+    z-index: +99;
+    position: absolute;
+    margin: 12px;
+    font-weight: bold;
+    font-size: larger;
+    text-shadow: #0f171e;
+}
+
+.moviePoster > .image {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: auto;
+    margin: auto;
+    box-sizing: border-box;
+}
+
+.blurTheSpot2{
+    background: url(fade_blur2.png) 0 100% repeat-x;
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    box-sizing: inherit;
+}
+.movieName {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: inherit;
+    padding: 12px;
+    z-index: +99;
+    color: #ffffff;
+    font-size: 30px;
+    line-height: 32px;
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+    white-space: pre-line;
+    text-overflow: ellipsis;
+    margin-bottom: 1.5rem;
+}
+
+.movieDetails{
+    padding: 12px;
+    box-sizing: border-box;
+}
+
+.mainSection > .columns >{
+    box-sizing: content-box;
+    max-width: 100%;
+    padding: 0;
+}
+.movieInformation>ul>.infoName{
+    font-weight: 700;
+    color: #8197a4;
+}
+.movieInformation>ul>.infoDetails{
+    font-weight: 700;
+    color: #79b8f3;
+    margin-bottom: 12px;
+}
+
+.seasonDetails .select select, .seasonDetails .select select:after, .seasonDetails .select select:hover {
+    background-color: #0f171e;
+    border-color: #0f171e;
+    color: #8197a4;
+}
+
+.allActions{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    color: #fff;
+    background-color: #425265;
+    text-decoration: none;
+    transition: color .2s ease-in-out;
+    border-radius: 3px;
+    text-align: unset;
+    font-size: 15px;
+    line-height: 20px;
+    box-sizing: border-box;
+    touch-action: manipulation;
+    padding: 14px 20px;
+    border: none;
+    vertical-align: top;
+    margin-bottom: 12px;
+}
+/* movie details ends here */
+
+/* search results starts here */
+.searchResult{
+    list-style: none;
+    box-sizing: border-box;
+}
+.searchResult > li{
+    padding: .3rem;
+}
+.searchResult > .reel > a > div{
+    position: relative;
+    width: 150px;
+    height: 200px;
+    border-radius: 4px;
+    background:#1F1B24;
+    background-size: cover;
+}
+.blurTheSpot {
+    background: url(fade_blur.png) 0 100% repeat-x;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-size: fill;
+}
+.searchResult > .reel > a > div > p{
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    right: 8px;
+    overflow: hidden;
+    padding: 0;
+    white-space: normal;
+    font-size: 17px;
+    line-height: 24px;
+    -webkit-font-smoothing: antialiased;
+    text-shadow: 1px -1px 0 rgba(0,0,0,.35);
+    color: #fff;
+}
+.searchPoster{
+    width: 150px;
+    height: 200px;
+    border-radius: 4px;
+    object-fit: cover;
+    background-size: contain;
+}
+/* search results starts here */
+
+/* episodes starts here */
+.episodesList{
+    list-style: none;
+    box-sizing: border-box;
+}
+.episodesList > li{
+    padding: .3rem;
+}
+
+.episodesList > .reel > .reelLink > div{
+    position: relative;
+    border-radius: 4px;
+    width: 150px;
+    height: 100px;
+    background:#1F1B24;
+    background-size: contain;
+}
+.blurTheSpot {
+    background: url(fade_blur.png) 0 100% repeat-x;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    border-radius: 4px;
+}
+.episodesList > .reel > .reelLink > div > p{
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    right: 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0;
+    white-space: normal;
+    font-size: 15px;
+    line-height: 17px;
+    height: 50px;
+    -webkit-font-smoothing: antialiased;
+    text-shadow: 1px -1px 0 rgba(0,0,0,.35);
+    color: #fff;
+}
+/* episodes ends here */
+
+
+/* footer styling starts here */
+.footerLinks{
+    list-style: none;
+    box-sizing: border-box;
+    padding: 0 1rem 0 1rem;
+}
+.footerLinks > li, .reel {
+    display: inline-block;
+    white-space: normal;
+    box-sizing: border-box;
+}
+.footerLink {
+    color:rgb(121, 184, 243);
+    font-size: 13px;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+.lastText {
+    color: #8197a4;
+    font-size: 13px;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    margin-bottom: 20px;
+}
+/* footer styling ends here */
