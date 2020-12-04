@@ -225,9 +225,12 @@ function downloadHoichoi(id){
         // console.log(data.video.streamingInfo.videoAssets);
         let videos = data.video.streamingInfo.videoAssets;
         let buttons = '';
-            buttons += `<button class="button is-small is-fullwidth is-dark" onclick="shareLink('${encodeURIComponent(videos.hls)}')">Stream Online</button><br>`;
+            buttons += `<a class="button is-small is-fullwidth is-dark" href="${video.hls.replace("https", "intent")}#Intent;action=android.intent.action.VIEW;scheme=http;type=application/vnd.apple.mpegurl;end">Stream Online</a><br>
+            <button class="button is-small is-fullwidth is-dark" onclick="shareLink('${encodeURIComponent(videos.hls)}')">Share - Stream Online</button><br>`;
+
         videos.mpeg.forEach(function(mpegVideos){
-            buttons += `<button class="button is-small is-fullwidth is-dark" onclick="shareLink('${encodeURIComponent(mpegVideos.url)}')">${mpegVideos.renditionValue.replace('_', '')}</button><br>`;
+            buttons += `<a class="button is-small is-fullwidth is-dark" href="${mpegVideos.url.replace("https", "intent")}#Intent;action=android.intent.action.VIEW;scheme=http;type=video/mp4;end">${mpegVideos.renditionValue.replace('_', '')}</a><br>
+            <button class="button is-small is-fullwidth is-dark" onclick="shareLink('${encodeURIComponent(mpegVideos.url)}')">Share - ${mpegVideos.renditionValue.replace('_', '')}</button><br>`;
         })
         let contentsToBeAdded = `
                     <div class="modal is-active" id="linksModal" style="z-index: +999999;">
