@@ -225,7 +225,7 @@ function downloadHoichoi(id){
         // console.log(data.video.streamingInfo.videoAssets);
         let videos = data.video.streamingInfo.videoAssets;
         let buttons = '';
-            buttons += `<a class="button is-small is-fullwidth is-dark" href="${video.hls.replace("https", "intent")}#Intent;action=android.intent.action.VIEW;scheme=http;type=application/vnd.apple.mpegurl;end">Stream Online</a><br>
+            buttons += `<a class="button is-small is-fullwidth is-dark" href="${videos.hls.replace("https", "intent")}#Intent;action=android.intent.action.VIEW;scheme=http;type=application/vnd.apple.mpegurl;end">Stream Online</a><br>
             <button class="button is-small is-fullwidth is-dark" onclick="shareLink('${encodeURIComponent(videos.hls)}')">Share - Stream Online</button><br>`;
 
         videos.mpeg.forEach(function(mpegVideos){
