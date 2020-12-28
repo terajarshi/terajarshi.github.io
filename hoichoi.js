@@ -50,7 +50,7 @@ function h_search(keyword){
         .then(data => {
             data.forEach(function(searches){
                 // console.log(searches);
-                if(searches.gist.contentType == "VIDEO" || searches.gist.contentType == "SERIES"){
+                if(searches.drmEnabled==false && searches.gist.contentType == "VIDEO" || searches.gist.contentType == "SERIES"){
                     console.log(searches);
                     // console.log(valB);
                     var gist = searches.gist;
