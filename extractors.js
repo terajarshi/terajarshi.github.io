@@ -154,7 +154,7 @@ animelist['extractor']={
             datas.then(data=>{
                 tempArray=[]
                 data.forEach(data=>{Array.from(data.querySelectorAll('.row .col-lg')).forEach(records=>{tempArray.push(records)})});
-                tempArray=tempArray.map(record=>{
+                tempArray=tempArray.filter(record=>!(/هنوز آپلود نشده است/gim.test(record.innerText.trim()))).map(record=>{
                     return{
                         'title':record.querySelector('a').title,
                         'link':record.querySelector('a').href,
