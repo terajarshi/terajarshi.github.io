@@ -5,11 +5,14 @@ html, nav {
 .has-searchbar-fixed-top {
     padding-top: 6.5rem !important;
 }
+.modal{
+    z-index:+99999 !important;
+}
 /* universal tags ends here */
 
 /* navbar starts here */
 .navbar {
-    z-index: +99999 !important;
+    z-index: +9999 !important;
 }
 .navbar>.navbar-menu{
     background-color: #0f171e;
@@ -65,7 +68,7 @@ html, nav {
     padding: 12px;
     z-index: +99;
     color: #ffffff;
-    font-size: 30px;
+    /* font-size: 2rem; */
     line-height: 32px;
     -webkit-font-smoothing: antialiased;
     overflow: hidden;
@@ -102,6 +105,7 @@ html, nav {
 
 .allActions{
     width: 100%;
+    margin: auto;
     display: flex;
     justify-content: center;
     color: #fff;
@@ -118,6 +122,8 @@ html, nav {
     border: none;
     vertical-align: top;
     margin-bottom: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis !important;
 }
 /* movie details ends here */
 
