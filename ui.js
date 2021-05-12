@@ -73,7 +73,7 @@ let ui = {
             <a onclick="window.history.back();" class="has-text-white backButton">
                 &#x2190;
             </a>
-            <figure class="image is-3by4" id="moviePosterFigure" style="background-image: url(${data['poster']});"></figure>
+            <figure class="image is-3by4" id="moviePosterFigure" style="background-image: url('${data['poster']}');"></figure>
             <div class="blurTheSpot2"></div>
             <p class="movieName">${data['title']} <br> <b>${data['provider']}</b></p>
         </div>
