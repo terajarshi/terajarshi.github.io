@@ -91,7 +91,7 @@ let discover={
         array.sort(() => Math.random() - 0.5);
        },
     fixedURIComponent:(str)=>{
-        return str.replace(/[!'()*]/g, function(c) {
+        return str.replace(/[()]/g, function(c) {
             return '%' + c.charCodeAt(0).toString(16);
           });
     }
