@@ -90,7 +90,7 @@ pagalmovies['extractor']={
                     return{
                         'title':record.querySelector('a').title,
                         'link':record.querySelector('a').href,
-                        'poster':`${corsHost2}${pagalmovies['url']}files/images/${record.querySelector('a').title.replaceAll(' ','_')}.jpg`,
+                        'poster':`${pagalmovies['url']}files/images/${record.querySelector('a').title.replaceAll(' ','_')}.jpg`,
                         'id':/movie\/(.*?)\//.exec(record.querySelector('a').href)[1],
                         'provider':'pagalmovies'
                     }
