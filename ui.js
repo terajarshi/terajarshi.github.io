@@ -73,7 +73,7 @@ let ui = {
             <a onclick="window.history.back();" class="has-text-white backButton">
                 &#x2190;
             </a>
-            <figure class="image is-3by4" id="moviePosterFigure" style="background-image: url('${data['poster']}');"></figure>
+            <figure class="image is-3by4" id="moviePosterFigure" style="background-image: url(${data['poster']});"></figure>
             <div class="blurTheSpot2"></div>
             <p class="movieName">${data['title']} <br> <b>${data['provider']}</b></p>
         </div>
@@ -105,7 +105,7 @@ let ui = {
   poster:(data)=>{
       return `<li class="reel">
                   <a href="?page=details&provider=${data['provider']}&permalink=${data['link']}" class="dpad-focusable" tabindex="0">
-                      <div style="background-image: url(${data['poster']});">
+                      <div style="background-image: url('${encodeURIComponent(data['poster'])}');">
                           <div class="blurTheSpot"></div>
                           <p class="reelText">${data['title']}<br> <b>${data['provider']}</b></p>
                       </div>

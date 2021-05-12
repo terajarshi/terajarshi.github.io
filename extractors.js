@@ -19,7 +19,7 @@ mkv123['extractor']={
                     return {
                         'title':record.querySelector('a').title.replace('Permalink to ',''),
                         'link':record.querySelector('a').href,
-                        'poster':encodeURIComponent(record.querySelector('img').src),
+                        'poster':discover.fixedURIComponent(record.querySelector('img').src),
                         'id':record.querySelector('a').title,
                         'provider':'mkv123'
                     }
@@ -38,7 +38,7 @@ mkv123['extractor']={
                 data={
                     'title':data.querySelector('p img').alt.trim(),
                     'url':url,
-                    'poster':encodeURIComponent(data.querySelector('p img').src),
+                    'poster':discover.fixedURIComponent(data.querySelector('p img').src),
                     'descriptions':Array.from(data.querySelectorAll('p')).filter(record=>/:/gi.test(record.innerText)).slice(0,-1).map(record=>{
                         record=record.innerText;
                         return{
@@ -49,12 +49,12 @@ mkv123['extractor']={
                     'downloads':Array.from(data.querySelectorAll('form')).map(record=>{
                         return{
                             'data':[{
-                                "data":encodeURIComponent(`fname=${record.querySelector('input[name=fname]').value}&fsip=${record.querySelector('input[name=fsip]').value}`),
+                                "data":discover.fixedURIComponent(`fname=${record.querySelector('input[name=fname]').value}&fsip=${record.querySelector('input[name=fsip]').value}`),
                                 "title":record.querySelector('input[name=fname]').value
                             }]
                         }
                     }),
-                    'screenshots':[encodeURIComponent(ssurl+" 1 (1).jpg"),encodeURIComponent(ssurl+" 1 (2).jpg"),encodeURIComponent(ssurl+" 1 (3).jpg")],
+                    'screenshots':[discover.fixedURIComponent(ssurl+" 1 (1).jpg"),discover.fixedURIComponent(ssurl+" 1 (2).jpg"),discover.fixedURIComponent(ssurl+" 1 (3).jpg")],
                     'provider':'mkv123'
                 }
                 resolve(data)
@@ -90,7 +90,7 @@ pagalmovies['extractor']={
                     return{
                         'title':record.querySelector('a').title,
                         'link':record.querySelector('a').href,
-                        'poster':encodeURIComponent(`${pagalmovies['url']}files/images/${record.querySelector('a').title.replaceAll(' ','_')}.jpg`),
+                        'poster':discover.fixedURIComponent(`${pagalmovies['url']}files/images/${record.querySelector('a').title.replaceAll(' ','_')}.jpg`),
                         'id':/movie\/(.*?)\//.exec(record.querySelector('a').href)[1],
                         'provider':'pagalmovies'
                     }
@@ -109,7 +109,7 @@ pagalmovies['extractor']={
                 data={
                     'title':data[0].innerText.split(':')[1].trim(),
                     'url':url,
-                    'poster':encodeURIComponent(`${pagalmovies['url']}files/images/${data[0].innerText.split(':')[1].trim().replaceAll(' ','_')}.jpg`),
+                    'poster':discover.fixedURIComponent(`${pagalmovies['url']}files/images/${data[0].innerText.split(':')[1].trim().replaceAll(' ','_')}.jpg`),
                     'descriptions':Array.from(data).splice(1).map(record=>{
                         record=record.innerText;
                         return{
@@ -158,7 +158,7 @@ animelist['extractor']={
                     return{
                         'title':record.querySelector('a').title,
                         'link':record.querySelector('a').href,
-                        'poster':encodeURIComponent(((/(no-poster|no_image)/gi.test(record.querySelector('img').src))?'':animelist['url']+record.querySelector('img').attributes['src'].value)),
+                        'poster':discover.fixedURIComponent(((/(no-poster|no_image)/gi.test(record.querySelector('img').src))?'':animelist['url']+record.querySelector('img').attributes['src'].value)),
                         'id':record.querySelector('a').href,
                         'provider':'animelist'
                     }
@@ -175,7 +175,7 @@ animelist['extractor']={
                 data = {
                     'title':data.querySelector('.header-single__info h1').innerText.trim(),
                     'url':url,
-                    'poster':encodeURIComponent(animelist['url']+data.querySelector('.poster').attributes['src'].value),
+                    'poster':discover.fixedURIComponent(animelist['url']+data.querySelector('.poster').attributes['src'].value),
                     'descriptions':[],
                     'downloads':[{
                         'data':Array.from(data.scripts).filter(script=>/p:(\d+)/.test(script.innerText))[0].innerText.match(/p2?:(\d+)/gi).join('&').replaceAll(":","="),

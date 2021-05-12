@@ -44,7 +44,7 @@ let discover={
                 url: url,
               })
         }else{
-        alert('Can\'t share')
+            alert('Can\'t share')
         }
       },
     animelistDownload:(data)=>{
@@ -89,7 +89,12 @@ let discover={
     },
     arraySort:( array )=>{
         array.sort(() => Math.random() - 0.5);
-       }
+       },
+    fixedURIComponent:(str)=>{
+        return encodeURI(str).replace(/[!'()*]/g, function(c) {
+            return '%' + c.charCodeAt(0).toString(16);
+          });
+    }
 
 }
 
