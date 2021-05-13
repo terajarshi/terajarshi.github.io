@@ -71,7 +71,7 @@ let discover={
                 }else{
                     data=data.map(link=>{
                         return {
-                            'data':[{'data':link, 'title':decodeURIComponent(link).match(/[^\/]+\/?$/gi)[0].replaceAll('/', '')}]
+                            'data':[{'data':link, 'title':decodeURIComponent(link).match(/(S[0-9]{1,3})|([^\/]+\/?$)/gi)[0].replaceAll('/', '')}]
                         }
                     })
                 }
