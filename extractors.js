@@ -199,7 +199,7 @@ animelist['extractor']={
             .then(data=>{
                 data=Array.from(data.querySelectorAll('a')).filter(link=>(/\.\w+$/gi).test(link.href)).map(link=>{
                     return {
-                        'title':(((/S[0-9]{1,3}(E[0-9]{1,3})/gi).test(link.href))?(/S[0-9]{1,3}(E[0-9]{1,3})/gi).exec(link.href)[1]+' ':link.innerText.trim().split('\n')[0]),
+                        'title':(((/(E[0-9]{1,3})/gi).test(link.href))?(/(E[0-9]{1,3})/gi).exec(link.href)[1]+' ':link.innerText.trim().split('\n')[0]),
                         'link':new URL(link.attributes['href'].value, host).href
                     }
                 }).filter(link=>new URL(link.link).host==new URL(host).host);
