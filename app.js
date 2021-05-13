@@ -31,7 +31,7 @@ function downloader(provider, data){
     data= data.map(link=>{
       return `<div class="field has-addons">
           <p class="control is-expanded">
-              <a href="${link.link}#Intent;action=android.intent.action.VIEW;scheme=http;type=video/mp4;end" class="button is-fullwidth is-small is-dark">${link.title}</a>
+              <a href="${link.link}" class="button is-fullwidth is-small is-dark" download>${link.title}</a>
           </p>
           ${navigator.share?`<div class="control"><button onclick="discover.shareLink('${link.link}')" class="button is-small is-info"><span class="icon is-small"><i class="fas fa-share"></i></span></button></div>`:''}
           <div class="control"><a href="${link.link.replace(/https?/gi, 'intent')}#Intent;action=android.intent.action.VIEW;scheme=http;type=video/mp4;S.browser_fallback_url=${link.link};end;" class="button is-small is-warning"><span class="icon is-small"><i class="fas fa-play"></i></span></a></div>
