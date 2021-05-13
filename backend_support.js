@@ -51,38 +51,31 @@ let discover={
         return new Promise((resolve, reject)=>{
             discover.getData(`${animelist.url}ajax-dlink/?${data}`)
             .then(data=>{
-                data=new DOMParser().parseFromString(data['data'], 'text/html');
-                if(data.querySelector('div[class^="download-box"]') && data.querySelector('div[class^="download-box"]').classList.contains('download-box__series')){
-                    data=Array.from(data.querySelectorAll('.item__link'));
-                    let season=Array.from(new Set(data.map(season=>{
-                        season = season.href.match(/\/(S[0-9]{1,3})\//)[1];
-                        return season
-                    })))
-                    season=season.map(season=>{
+                data=new DOMParser().parseFromString(data['data'], 'text/html').querySelectorAll('a');
+                data=Array.from(new Set(Array.from(data).filter(link=>(/(Anime|Movie|Series)\//gi).test(link.href) && !(/[#]/gi).test(link.href) || (/\.\w+$/gi).test(link.href)).map(link=>{
+                    return (/\.\w+$/gi).test(link.href)?link.href.match(/^.*\//gi)[0]:link.href;
+                })))
+                let groups = Array.from(new Set(data.filter(link=>(/[174][0-9]{0,3}p.\w+/gi).test(link)).map(link=>link.match(/[174][0-9]{0,3}p.\w+/gi))))
+                if(groups.length>0){
+                    data=groups.map(group=>{
                         return {
-                            'heading':season,
-                            'data':data.filter(link=>new RegExp(season).test(link)).map(link=>{
+                            'heading':decodeURIComponent(group),
+                            'data':data.filter(link=>new RegExp(group).test(link)).map(link=>{
                                 return {
-                                    'title':(((/\.\w+$/gi).test(link.href))?(/S[0-9]{1,3}(E[0-9]{1,3})/gi).exec(link.href)[1]+' ':'')+link.innerText.trim(),
-                                    'data':link.href
+                                    'data':link,
+                                    'title':decodeURIComponent(link).match(/(S[0-9]{1,3})|([^\/]+\/?$)/gi)[0].replaceAll('/', '')
                                 }
                             })
                         }
-                    })
-                    console.log(season)
-                    resolve(season)
+                    })       
                 }else{
-                    data=Array.from(data.querySelectorAll('.info')).map(info=>{
+                    data=data.map(link=>{
                         return {
-                            'data':[{
-                                'title':info.querySelector('.info__quality').innerText,
-                                'data':info.querySelector('a').href,
-                                'info':Array.from(info.querySelectorAll('.info__value')).map(info=>info.innerText).join(" ")
-                            }]
+                            'data':[{'data':link, 'title':decodeURIComponent(link).match(/[^\/]+\/?$/gi)[0].replaceAll('/', '')}]
                         }
                     })
-                    resolve(data)
                 }
+                resolve(data)
             })
             .catch(error=>reject(error))
         })
@@ -97,5 +90,6 @@ let discover={
     }
 
 }
+
 
 

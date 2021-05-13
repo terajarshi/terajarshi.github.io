@@ -192,27 +192,20 @@ animelist['extractor']={
         })
     },
     download: (data)=>{
+        let host=data;
+        console.log(host)
         return new Promise((resolve, reject)=>{
-            if(/\.\w+$/gi.test(data)){
-                resolve([{
-                    'title':'Download',
-                    'link':data
-                }])
-            }else{
-                let url=data;
-                discover.getData(data, 'HTML')
-                .then(data=>{
-                    data=Array.from(data.querySelectorAll('a.flex')).filter(link=>!/\?dir=/.test(link.href)).map(link=>{
-                        return {
-                            'title':(((/\.\w+$/gi).test(link.href))?(/S[0-9]{1,3}(E[0-9]{1,3})/gi).exec(link.href)[1]+' ':link.innerText.trim().split('\n')[0]),
-                            'link':(link.pathname)?url.match(/https?:\/\/(.*?)\//gi)[0]+link.pathname.replace('/', ''):link.href
-                        }
-                    });
-                    console.log(data)
-                    resolve(data)
-                })
-                .catch(error=>reject(error))
-            }
+            discover.getData(data, 'HTML')
+            .then(data=>{
+                data=Array.from(data.querySelectorAll('a')).filter(link=>(/\.\w+$/gi).test(link.href)).map(link=>{
+                    return {
+                        'title':(((/S[0-9]{1,3}(E[0-9]{1,3})/gi).test(link.href))?(/S[0-9]{1,3}(E[0-9]{1,3})/gi).exec(link.href)[1]+' ':link.innerText.trim().split('\n')[0]),
+                        'link':new URL(link.attributes['href'].value, host).href
+                    }
+                }).filter(link=>new URL(link.link).host==new URL(host).host);
+                resolve(data)
+            })
+            .catch(error=>reject(error))
         })
     }
 }

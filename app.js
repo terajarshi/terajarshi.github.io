@@ -33,7 +33,8 @@ function downloader(provider, data){
           <p class="control is-expanded">
               <a href="${link.link}#Intent;action=android.intent.action.VIEW;scheme=http;type=video/mp4;end" class="button is-fullwidth is-small is-dark">${link.title}</a>
           </p>
-          <div class="control"><button onclick="discover.shareLink('${link.link}')" class="button is-small is-info"><span class="icon is-small"><i class="fas fa-share"></i></span></button></div>
+          ${navigator.share?`<div class="control"><button onclick="discover.shareLink('${link.link}')" class="button is-small is-info"><span class="icon is-small"><i class="fas fa-share"></i></span></button></div>`:''}
+          <div class="control"><a href="${link.link.replace(/https?/gi, 'intent')}#Intent;action=android.intent.action.VIEW;scheme=http;type=video/mp4;S.browser_fallback_url=${link.link};end;" class="button is-small is-warning"><span class="icon is-small"><i class="fas fa-play"></i></span></a></div>
       </div>`
     }).join('')
     ui.showModal(data, 'card')
