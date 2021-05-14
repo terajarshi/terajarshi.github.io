@@ -297,4 +297,4 @@ skymoviesHD['extractor']={
 
 
 
-let extractors=[mkv123,pagalmovies,animelist,skymoviesHD]
+let extractors=[mkv123,pagalmovies,animelist]
