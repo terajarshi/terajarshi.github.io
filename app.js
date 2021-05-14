@@ -43,13 +43,33 @@ function downloader(provider, data){
     ui.showModal('Error: '+error, 'card')
   })
 }
-
+function updateMeta(data){
+  let tags = `<meta property="og:title" content="${(data['title'])?data['title']:'Home'} - Movie Grabber">
+  <meta property="og:site_name" content="MovieGrabber">
+  <meta property="og:url" content="${window.location.href}">
+  <meta property="og:description" content="${(data['descriptions'])?data['descriptions'].map(description=>description['content']+':'+description['content']).join(' '):''}">
+  <meta property="og:type" content="video.movie">
+  <meta property="og:image" content="${(data['poster'])?data['poster']:''}">
+  <meta name="title" content="${(data['title'])?data['title']:''}">
+  <meta name="description" content="${(data['descriptions']?data['descriptions'].map(description=>description['content']+':'+description['content']).join(' '):'')}">
+  <meta name="keywords" content="${(data['descriptions']?data['descriptions'].map(description=>description['content']).join():'')}">
+  <meta name="robots" content="index, follow">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="language" content="English">
+  <meta name="author" content="${(data['provider'])?data['provider']:'Terajarshi'}">`
+  document.querySelector('head').innerHTML+=tags;
+  document.querySelector('head title').innerHTML=`${(data['title'])?data['title']:'Home'} - Movie Grabber`;
+}
 
 if(!params.has("page") && !params.has("search")){
   searchResults('')
+  let data={'title':'Home', 'descriptions':[{'content':'Search For Movies and Series and Anime for free'}]}
+  updateMeta(data)
 }
 if(!params.has("page") && params.has("search")){
   searchResults(params.get('search'))
+  let data={'title':'Search', 'descriptions':[{'content':params.get('search')}]}
+  updateMeta(data)
 }
 if(params.has("page") && params.has("provider") && !params.has("search")){
   // document.querySelector('.navbar').classList.add('is-hidden');
@@ -58,6 +78,7 @@ if(params.has("page") && params.has("provider") && !params.has("search")){
   eval(params.get('provider'))['extractor'].details(params.get('permalink'))
   .then(data=>{
     document.querySelector('.mainSection').innerHTML=ui.showMovie(data);
+    updateMeta(data)
   })
 }
 

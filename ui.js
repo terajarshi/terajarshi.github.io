@@ -82,7 +82,6 @@ let ui = {
                 <p class="has-text-white"></p><br>
                 <ul id="movieInfo">
                 ${data['descriptions'].map(description=>`<li class="infoName">${description['title']}</li><li class="infoDetails">${description['content']}</li>`).join('')}
-
                 </ul>
             </div>
         </div>
@@ -100,7 +99,7 @@ let ui = {
             </div>
         </div>
         <p class="text has-text-centered"><a href="${data['url']}">***Visit source Page***</a></p>
-    </div>`;
+    </div>`;  
   },
   poster:(data)=>{
       return `<li class="reel">
