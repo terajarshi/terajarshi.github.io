@@ -201,7 +201,7 @@ animelist['extractor']={
     },
     download: (data)=>{
         data=new URL(data);
-        data=new URL('?dir='+data.pathname.replace('/', ''), data.origin).href;
+        data=(!data.href.includes('?dir')?new URL('?dir='+data.pathname.replace('/', ''), data.origin).href:data);
         let host=data;
         return new Promise((resolve, reject)=>{
             discover.getData(data, 'HTML')
