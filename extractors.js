@@ -1,12 +1,12 @@
 let mkv123 = {'url':'https://123mkv.kim/'};
 let pagalmovies = {'url':'https://www.pagalmovies.cyou/'};
 let animelist = {'url':'https://anime-list16.site/', 'types':['movie','series','anime']};
+let skymoviesHD={'url':'https://skymovieshd.ltd/'}
 // http://1hastidl.fun/
 
 mkv123['extractor']={
     search:(text, page)=>{
         return new Promise((resolve, reject)=>{
-            console.log(page!=1 && page)
             discover.getData(mkv123['url']+((page!=1 && page)?`page/${page}/`:'')+((text?`?s=${text}`:'')), 'HTML',{
                 "headers": {
                     'user-agent':'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:88.0) Gecko/20100101 Firefox/88.0',
@@ -120,7 +120,7 @@ pagalmovies['extractor']={
                     'downloads':Array.from(downloadLinks).map(record=>{
                         return{
                             'data':[{
-                                "data":record.href.match('\/file\/(.*?)\/')[1],
+                                "data":url.replace(/\/([0-9]{4})\//gi, `/${record.href.match('\/file\/(.*?)\/')[1]}/`),
                                 "title":record.innerText.match(/(.*)H/i)[1],
                                 "info":/Size: (.*?[kmg]b)/i.exec(record.innerText)[1]
                             }]
@@ -128,21 +128,29 @@ pagalmovies['extractor']={
                     }),
                     'provider':'pagalmovies'
                 }
+                console.log(data)
                 resolve(data)
             })
             .catch(error=>reject(error))
         })
     },
     download:(data)=>{
+        console.log(data.replace(/\/movie\//gi, '/server/'))      
         return new Promise((resolve, reject)=>{
-            discover.uFetch(`${pagalmovies['url']}download/${data}/server_1`)
-            .then(response=>{
-                resolve([{
-                    'title':'Download',
-                    'link':(response.ok)?`${pagalmovies['url']}download/${data}/server_1`:`${pagalmovies['url']}download/${data}/server_2`
-                }])
+            discover.getData(data.replace(/\/movie\//gi, '/server/'), 'HTML')
+            .then(data=>{
+                data=[...data.querySelectorAll('.dwnLink')].map(link=>{return {'title':'Download', 'link':link.href}})
+                resolve(data)
             })
             .then(error=>reject(error))
+            // discover.uFetch(`${pagalmovies['url']}download/${data}/server_1`)
+            // .then(response=>{
+            //     resolve([{
+            //         'title':'Download',
+            //         'link':(response.ok)?`${pagalmovies['url']}download/${data}/server_1`:`${pagalmovies['url']}download/${data}/server_2`
+            //     }])
+            // })
+            // .then(error=>reject(error))
         })
     }
 }
@@ -192,8 +200,9 @@ animelist['extractor']={
         })
     },
     download: (data)=>{
+        data=new URL(data);
+        data=new URL('?dir='+data.pathname.replace('/', ''), data.origin).href;
         let host=data;
-        console.log(host)
         return new Promise((resolve, reject)=>{
             discover.getData(data, 'HTML')
             .then(data=>{
@@ -209,7 +218,83 @@ animelist['extractor']={
         })
     }
 }
+skymoviesHD['extractor']={
+    search:(text, page)=>{
+        return new Promise((resolve, reject)=>{
+            console.log((text.length>4)?`${skymoviesHD['url']}search.php?search=${text}&cat=All`:skymoviesHD['url'])
+            discover.getData((text.length>4)?`${skymoviesHD['url']}search.php?search=${text}&cat=All`:skymoviesHD['url'], 'HTML')
+            .then(data=>{
+                data = Array.from(data.querySelectorAll('a[href^="/movie/"]')).filter(link=>link.innerText.trim().length>5).map(link=>{
+                    return {
+                        'title':link.innerText.trim().substring(0,30),
+                        'link':new URL(link.attributes['href'].value, skymoviesHD['url']).href,
+                        'id':new URL(link.attributes['href'].value, skymoviesHD['url']).href,
+                        'poster':'',
+                        'provider':'skymoviesHD'
+                    }
+                })
+                if(page){data=data.slice((page-1)*page, page*6)}
+                console.log(data)
+                resolve(data)
+            })
+            .catch(error=>reject(error))
+        })
+    },
+    details:(url)=>{
+        return new Promise((resolve,reject)=>{
+            discover.getData(url, 'HTML')
+            .then(data=>{
+                data={
+                    'title':data.querySelector('title').innerText.trim(),
+                    'url':url,
+                    'poster':data.querySelector('.movielist img').src,
+                    'descriptions':Array.from(data.querySelectorAll('.Let')).filter(let=>(/:/gi).test(let.innerText)).map(record=>{
+                        record=record.innerText;
+                        return{
+                            'title':record.split(':')[0],
+                            'content':record.split(':')[1]
+                        }
+                    }),
+                    'screenshots':Array.from(data.querySelectorAll('center img')).map(img=>img.src),
+                    'downloads':[...data.querySelectorAll('a[href^="https://howblogs"]')].map(link=>{
+                        return {
+                            'data':[{'title':'Download','data':link.href}]
+                        }
+                    }),
+                    'provider': 'skymoviesHD'
+                }
+                resolve(data)
+            })
+            .catch(error=>reject(error))
+        })
+    },
+    download: (data)=>{
+        let host=data;
+        return new Promise((resolve, reject)=>{
+                if(!data.includes('streamtape'|'strcloud')){
+                    discover.getData(data, 'HTML')
+                    .then(data=>{
+                        data=[...data.querySelectorAll('.cotent-box a')].map(link=>link.attributes['href'].value)
+                        console.log(data)
+                    })
+                    resolve([{'title':'Download', 'link':'data'}])
+                }
+            // discover.getData(data, 'HTML')
+            // .then(data=>{
+            //     data=Array.from(data.querySelectorAll('a')).filter(link=>(/\.\w+$/gi).test(link.href)).map(link=>{
+            //         return {
+            //             'title':(((/(E[0-9]{1,3})/gi).test(link.href))?(/(E[0-9]{1,3})/gi).exec(link.href)[1]+' ':link.innerText.trim().split('\n')[0]),
+            //             'link':new URL(link.attributes['href'].value, host).href
+            //         }
+            //     }).filter(link=>new URL(link.link).host==new URL(host).host);
+            //     console.log(data)
+            //     resolve(data)
+            // })
+            // .catch(error=>reject(error))
+        })
+    }
+}
 
 
 
-let extractors=[mkv123,pagalmovies,animelist]
+let extractors=[mkv123,pagalmovies,animelist,skymoviesHD]
