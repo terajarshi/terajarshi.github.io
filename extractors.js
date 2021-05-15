@@ -2,6 +2,7 @@ let mkv123 = {'url':'https://123mkv.kim/'};
 let pagalmovies = {'url':'https://www.pagalmovies.cyou/'};
 let animelist = {'url':'https://anime-list16.site/', 'types':['movie','series','anime']};
 let skymoviesHD={'url':'https://skymovieshd.ltd/'}
+let moviesjoy={'url':'https://moviesjoy.pw/'}
 // http://1hastidl.fun/
 
 mkv123['extractor']={
@@ -76,6 +77,74 @@ mkv123['extractor']={
                 'title':'Download',
                 'link':data.querySelector('meta[http-equiv="refresh"]').content.replace(/.*?url=/gi, '')
             }]))
+            .catch(error=>reject(error))
+        })
+    }
+}
+moviesjoy['extractor']={
+    search:(text, page)=>{
+        return new Promise((resolve, reject)=>{
+            discover.getData(moviesjoy['url']+((page!=1 && page)?`page/${page}/`:'')+((text?`?s=${text}`:'')), 'HTML',{
+                "headers": {
+                    'user-agent':'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:88.0) Gecko/20100101 Firefox/88.0',
+                    // 'referer':mkv123['url']
+                }
+            })
+            .then(data=>{
+                data = data.querySelectorAll('.latestpost.post');
+                data = Array.from(data).map(record=>{
+                    return {
+                        'title':record.querySelector('a').title.replace('Permalink to ',''),
+                        'link':record.querySelector('a').href+"?poster="+discover.fixedURIComponent(record.querySelector('img').src),
+                        'poster':discover.fixedURIComponent(record.querySelector('img').src),
+                        'id':record.querySelector('a').title,
+                        'provider':'moviesjoy'
+                    }
+                })
+                resolve(data)
+            })
+            .catch(error=>reject(error))
+        })
+    },
+    details:(url)=>{
+        return new Promise((resolve, reject)=>{
+            discover.getData(url, 'HTML')
+            .then(data=>{
+                data = data.querySelector('article.post');
+                data={
+                    'title':data.querySelector('.entry-title').innerText.trim(),
+                    'url':url.split('?poster=')[0],
+                    'poster':url.split('?poster=')[1],
+                    'descriptions':[...data.querySelector('.post-content').innerText.split('\n')].map(desc=>{
+                        return {'title':desc.split(':')[0].trim(),'content':desc.split(':')[1].trim()}
+                        }),
+                    'downloads':[...data.querySelectorAll('iframe[src^="https://movies"]')].map(iframe=>{
+                        return {'data':[{
+                            "data":iframe.src,
+                            "title":"Download"
+                        }]}
+                    }),
+                    'provider':'moviesjoy'
+                }
+                resolve(data)
+            })
+            .catch(error=>reject(error))
+        })
+    },
+    download:(data)=>{
+        return new Promise((resolve, reject)=>{
+            discover.getData(data,'HTML')
+            .then(data=>{
+                let title = data.querySelector('title').innerText;
+                discover.getData(data.querySelector('iframe').src, 'HTML').then(video=>{
+                    data=video.querySelector('video source').src;
+                    resolve([{
+                        'title':title,
+                        'link':video.querySelector('video source').src
+                    }])
+                })
+                .catch(error=>reject(error))
+            })
             .catch(error=>reject(error))
         })
     }
@@ -193,6 +262,7 @@ animelist['extractor']={
                 }
                 discover.animelistDownload(data.downloads[0]['data']).then(list=>{
                     data.downloads=list
+                    console.log(data)
                     resolve(data)
                 })
             })
@@ -296,5 +366,4 @@ skymoviesHD['extractor']={
 }
 
 
-
-let extractors=[mkv123,pagalmovies,animelist]
+let extractors=[mkv123,pagalmovies,animelist,moviesjoy]
