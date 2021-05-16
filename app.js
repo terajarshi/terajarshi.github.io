@@ -1,3 +1,6 @@
+if("serviceWorker" in navigator){
+  navigator.serviceWorker.register("service-worker.js")
+}
 // url parameters
 let params = new window.URLSearchParams(window.location.search);
 // url parameters ends
