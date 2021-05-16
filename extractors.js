@@ -114,7 +114,7 @@ moviesjoy['extractor']={
                 data={
                     'title':data.querySelector('.entry-title').innerText.trim(),
                     'url':url.split('?poster=')[0],
-                    'poster':url.split('?poster=')[1],
+                    'poster':discover.fixedURIComponent(url.split('?poster=')[1]),
                     'descriptions':[...data.querySelector('.post-content').innerText.split('\n')].map(desc=>{
                         return {'title':desc.split(':')[0].trim(),'content':desc.split(':')[1].trim()}
                         }),
@@ -173,12 +173,13 @@ pagalmovies['extractor']={
         return new Promise((resolve, reject)=>{
             discover.getData(url, 'HTML')
             .then(data=>{
-                downloadLinks=data.querySelectorAll('.fileName');
+                let poster=data.querySelector('.absmiddle').src;
+                let downloadLinks=data.querySelectorAll('.fileName');
                 data=data.querySelector('.Blue').querySelectorAll('.Fun');
                 data={
                     'title':data[0].innerText.split(':')[1].trim(),
                     'url':url,
-                    'poster':discover.fixedURIComponent(`${pagalmovies['url']}files/images/${data[0].innerText.split(':')[1].trim().replaceAll(' ','_')}.jpg`),
+                    'poster':discover.fixedURIComponent(poster),
                     'descriptions':Array.from(data).splice(1).map(record=>{
                         record=record.innerText;
                         return{
@@ -189,7 +190,7 @@ pagalmovies['extractor']={
                     'downloads':Array.from(downloadLinks).map(record=>{
                         return{
                             'data':[{
-                                "data":url.replace(/\/([0-9]{4})\//gi, `/${record.href.match('\/file\/(.*?)\/')[1]}/`),
+                                "data":record.href.replace(/\/file\//, '/server/'),
                                 "title":record.innerText.match(/(.*)H/i)[1],
                                 "info":/Size: (.*?[kmg]b)/i.exec(record.innerText)[1]
                             }]
@@ -197,7 +198,6 @@ pagalmovies['extractor']={
                     }),
                     'provider':'pagalmovies'
                 }
-                console.log(data)
                 resolve(data)
             })
             .catch(error=>reject(error))
