@@ -1,8 +1,7 @@
 function autosearch(search, voice){
-    console.log(search)
-    discover.getData('http://www.omdbapi.com/?apikey=fd161998&s='+search)
+    discover.uFetch('http://www.omdbapi.com/?apikey=fd161998&s='+search)
+    .then(response=>response.json())
     .then(data=>{
-        console.log(data)
         if(voice){
             document.querySelector('#search').querySelector('input').value=(data['Response']=='True')?data['Search'][0]['Title']:'No results found';
         }
@@ -38,6 +37,7 @@ window.addEventListener('DOMContentLoaded', ()=>{
             recognition.onsoundend=()=>document.querySelector('#search').querySelector('input').value="Trying to recognise...";
             recognition.onresult = (result)=>{
                 autosearch(result['results'][0][0]['transcript'], 'True')
+                if(result['results'][0][0]){searchForm.submit()}
                 recognition.stop();
             }
             recognition.abort=document.querySelector('#search').querySelector('input').value='';

@@ -3,7 +3,6 @@ let corsHost2 = 'https://api.codetabs.com/v1/proxy?quest=';
 
 let discover={
     uFetch: (url, options)=>{
-        ui.showModal(`<progress class="progress is-primary" max="100">15%</progress>`);
         return new Promise((resolve, reject)=>{
             fetch(url, options)
             .then(response=>{resolve(response)})
@@ -19,6 +18,7 @@ let discover={
         })
     },
     getData: (url, type, options)=>{
+        ui.showModal(`<progress class="progress is-primary" max="100">15%</progress>`);
         return new Promise((resolve, reject)=>{
             discover.uFetch(url, options)
             .then(response=>(type=='HTML')?response.text():response.json())
