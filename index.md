@@ -3,7 +3,7 @@
     <head profile="http://www.w3.org/2005/10/profile">
         <link rel="icon" 
               type="image/png" 
-              href="favicon.png">
+              href="/favicon.png">
     <meta charset="utf-8">
     <meta name="theme-color" content="#0f171e">
     <meta name="viewport" content="width=device-width, initial-scale=1">
