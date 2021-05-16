@@ -92,13 +92,13 @@ let ui = {
                 <li class="infoName">Downloads: </li>
                 ${data['downloads'].map(download=>{
                   let preloadDom=(download['heading'])?`<br><li class="infoName">${download['heading']}</li>`:'';
-                  preloadDom+=download['data'].map(link=>`<li><button onclick="downloader('${data['provider']}','${link['data']}')" class="allActions">${link['title']}</button></li>`).join(' ')
+                  preloadDom+=download['data'].map(link=>`<li><button onclick="downloader('${data['provider']}','${link['data']}', ${link['heading']})" class="allActions">${link['title']}</button></li>`).join(' ')
                   return preloadDom
                 }).join(' ')}                          
                 </ul>
             </div>
         </div>
-        <p class="text has-text-centered"><a href="${data['url']}">***Visit source Page***</a></p>
+        <a href="${data['url']}" class="text has-text-centered has-text-info">Visit source Page</a>
     </div>`;  
   },
   poster:(data)=>{

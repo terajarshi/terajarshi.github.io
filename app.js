@@ -28,7 +28,7 @@ function searchResults(text){
     }
   })
 }
-function downloader(provider, data){
+function downloader(provider, data, title){
   eval(`${provider}`)['extractor'].download(data)
   .then(data=>{
     data= data.map(link=>{
@@ -37,7 +37,7 @@ function downloader(provider, data){
               <a href="${link.link}" class="button is-fullwidth is-small is-dark" download>${link.title}</a>
           </p>
           ${navigator.share?`<div class="control"><button onclick="discover.shareLink('${link.link}')" class="button is-small is-info"><span class="icon is-small"><i class="fas fa-share"></i></span></button></div>`:''}
-          <div class="control"><a href="${link.link.replace(/https?/gi, 'intent')}#Intent;action=android.intent.action.VIEW;scheme=http;type=video/mp4;S.browser_fallback_url=${link.link};end;" class="button is-small is-warning"><span class="icon is-small"><i class="fas fa-play"></i></span></a></div>
+          <div class="control"><a href="${link.link.replace(/https?/gi, 'intent')}#Intent;action=android.intent.action.VIEW;scheme=http;type=video/mp4;S.title=${(title)?title:link.title};S.browser_fallback_url=${link.link};end;" class="button is-small is-warning"><span class="icon is-small"><i class="fas fa-play"></i></span></a></div>
       </div>`
     }).join('')
     ui.showModal(data, 'card')
