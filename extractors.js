@@ -116,7 +116,8 @@ moviesjoy['extractor']={
                     'url':url.split('?poster=')[0],
                     'poster':discover.fixedURIComponent(url.split('?poster=')[1]),
                     'descriptions':[...data.querySelector('.post-content').innerText.split('\n')].map(desc=>{
-                        return {'title':desc.split(':')[0].trim(),'content':desc.split(':')[1].trim()}
+                        desc=desc.split(':');
+                        return {'title':(desc[0])?desc[0].trim():'','content':(desc[1])?desc[1].trim():''}
                         }),
                     'downloads':[...data.querySelectorAll('iframe[src^="https://movies"]')].map(iframe=>{
                         return {'data':[{
@@ -262,7 +263,6 @@ animelist['extractor']={
                 }
                 discover.animelistDownload(data.downloads[0]['data']).then(list=>{
                     data.downloads=list
-                    console.log(data)
                     resolve(data)
                 })
             })
