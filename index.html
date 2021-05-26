@@ -42,7 +42,10 @@
         </div>
         <div class="navbar-menu">
             <div class="navbar-start">
-                <a href="?page=movies" class="navbar-item has-text-white">Movies</a>
+                <a href="?search=Hindi" class="navbar-item has-text-white">Hindi</a>
+                <a href="?search=Bengali" class="navbar-item has-text-white">Bengali</a>
+                <a href="?search=Hollywood" class="navbar-item has-text-white">Hollywood</a>
+                <a href="?search=Anime" class="navbar-item has-text-white">Anime</a>
             </div>
         </div>
         <div class="navbar-item" id="searchForm">
