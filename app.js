@@ -85,3 +85,27 @@ if(params.has("page") && params.has("provider") && !params.has("search")){
   })
 }
 
+if (
+  "serviceWorker" in navigator &&
+  ["localhost", "127"].indexOf(location.hostname) === -1
+) {
+  // register service worker file
+  navigator.serviceWorker
+    .register("service-worker.js")
+    .then((reg) => {
+      reg.onupdatefound = () => {
+        const installingWorker = reg.installing;
+        installingWorker.onstatechange = () => {
+          switch (installingWorker.state) {
+            case "installed":
+              if (navigator.serviceWorker.controller) {
+                // new update available
+                ui.showModal('New Update Available, clear site data from the browser to get the update','card')
+              }
+              break;
+          }
+        };
+      };
+    })
+    .catch((err) => console.error("[SW ERROR]", err));
+}
