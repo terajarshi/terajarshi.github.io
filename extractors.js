@@ -75,7 +75,7 @@ mkv123['extractor']={
             })
             .then(data=>resolve([{
                 'title':'Download',
-                'link':data.querySelector('meta[http-equiv="refresh"]').content.replace(/.*?url=/gi, '')
+                'link':data.querySelector('a[onclick="open_win()"]').href
             }]))
             .catch(error=>reject(error))
         })
