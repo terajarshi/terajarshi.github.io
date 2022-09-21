@@ -1,4 +1,4 @@
-let corsHost2='https://cors-anywhere.herokuapp.com/https://github.com/terajarshi/terajarshi.github.io/edit/main/backend_support.js';
+let corsHost2='https://cors-anywhere.herokuapp.com/';
 let corsHost = 'https://api.codetabs.com/v1/proxy?quest=';
 
 let discover={
