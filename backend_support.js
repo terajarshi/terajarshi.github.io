@@ -1,4 +1,4 @@
-let corsHost2='https://cors-anywhere.herokuapp.com/';
+let corsHost2='https://thingproxy.freeboard.io/fetch/';
 let corsHost = 'https://api.codetabs.com/v1/proxy?quest=';
 
 let discover={
