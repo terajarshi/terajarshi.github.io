@@ -1,7 +1,7 @@
-let mkv123 = {'url':'https://123mkv.cloud/'};
-let pagalmovies = {'url':'https://www.pagalmovies.beauty/'};
-let animelist = {'url':'https://anime-list1.fun/', 'types':['movie','series','anime']};
-let skymoviesHD={'url':'https://skymovieshd.baby/'}
+let mkv123 = {'url':'https://123mkv.report/'};
+let pagalmovies = {'url':'https://www.pagalmovies.com.in/'};
+let animelist = {'url':'https://anime-list.net/', 'types':['movie','series','anime']};
+//let skymoviesHD={'url':'https://skymovieshd.baby/'}
 let moviesjoy={'url':'https://moviesjoy.pw/'}
 // http://1hastidl.fun/
 
